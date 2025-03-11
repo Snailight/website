@@ -1,65 +1,133 @@
 body, html {
     margin: 0;
+    height: fit-content;
     background: lightblue;
     box-sizing: border-box;
 }
 
 .header {
     position: sticky;
+    display: block;
+    top: -360px;
     width: 100%;
-    height: 2.1em;
+    height: 400px;
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
     font-size: large;
     letter-spacing: 10px;
     padding: 5px 20px;
     background: rgb(101, 127, 136);
-    box-shadow: 10px 5px 5px black;
-    border-bottom-left-radius: .8em;
+    /* box-shadow: 10px 5px 5px black; */
 }
 
-.header a {
-    text-decoration: none;
+.header .dtt {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 80%;
+    gap: 30%;
+    flex-direction: row-reverse;
+    /* align-items: start; */
 }
 
-.header span {
-    display: inline-block;
+.header .dtt img {
+    height: 80%;
+}
+
+.header .dtt span {
+    position: relative;
+    height: fit-content;
+    padding: 4em 0;
+}
+
+.header .navigation {
+    display: none;
+    width: 32px;
+}
+
+.header .navigation span {
+    display: block;
     position: relative;
     font-weight: bold;
-    height: 100%;
-    padding: 0 5px;
-}
-
-.header span span {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 10px;
-    height: fit-content;
-    color: black;
-}
-
-.header span img {
-    position: relative;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.header a[href="#navigation"] {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    width: 40px;
-    box-sizing: border-box;
-    transform: translateY(-50%);
-}
-
-.header a[href="#navigation"] span {
-    display: block;
-    width: 100%;
+    margin: 4px 0;
     height: 4px;
-    margin-bottom: 4px;
-    border-radius: .8em;
+    padding: 0 5px;
     background: black;
+    border-radius: 8px;
+}
+
+.board {
+    position: relative;
+    display: flex;
+    height: 20%;
+    width: 80%;
+    border-radius: .8em;
+    background: transparent;
     box-sizing: border-box;
+    letter-spacing: normal;
+    word-spacing: 20px;
+    margin-left: 80px;
+    align-items: end;
+}
+
+.board a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    transition: .4s ease-out;
+    background: transparent;
+    border-right: thin solid gray;
+    border-left: thin solid gray;
+}
+
+.board a:hover {
+    background: red;
+    color: white;
+    border: thin solid gray;
+}
+
+@media screen and (max-width: 992px) {
+    .header {
+        position: sticky;
+        display: flex;
+        top: 0;
+        height: 2.1em;
+        /* border-bottom-left-radius: .8em; */
+        /* justify-content: center; */
+        align-items: center;
+    }
+
+    .header .dtt {
+        display: flex;
+        height: 100%;
+        /* justify-content: center; */
+        align-items: center;
+        flex-direction: row;
+        padding: 0 20px;
+        gap: 32px;
+    }
+
+    .header .dtt img {
+        margin-left: 2em;
+        border-radius: 50%;
+    }
+
+    .header .dtt span {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header .navigation {
+        display: block;
+        position: absolute;
+        right: 32px;
+    }
+
+    .board {
+        display: none;
+        position: absolute;
+    }
 }
