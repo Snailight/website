@@ -55,9 +55,10 @@ window.addEventListener('load', e => {
     // null
   } else if (window.screen.width < 992) {
     elm = null;
+  } else {
+    elm.style.cursor = 'pointer';
+    elm.addEventListener('click', (evt) => {
+      window.location.href = '/';
+    })
   }
-  elm.style.cursor = 'pointer';
-  elm.addEventListener('click', (evt) => {
-    window.location.href = '/';
-  })
 })

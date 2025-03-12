@@ -1,0 +1,41 @@
+.judul {
+    text-align: center;
+}
+
+.penjelasan {
+    width: 60vw;
+    margin: 20px;
+}
+
+.penjelasan {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.penjelasan img {
+    width: 20%;
+    height: fit-content;
+}
+
+.penjelasan .card {
+    position: relative;
+    display: block;
+    font-size: larger;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin-left: 10px;
+    z-index: 100;
+    width: 70%;
+}
+
+#hiasan {
+    font-size: 120px;
+    position: absolute;
+    top: -80px;
+    color: gray;
+    z-index: 90;
+    opacity: .7;
+}

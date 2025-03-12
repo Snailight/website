@@ -25,6 +25,24 @@
 <?php
     echo('<h1 class="judul">Snailight</h1>')
 ?>
+    <div class="penjelasan">
+        <div class="card">
+            <i class="bi bi-quote" id="hiasan"></i>
+            <div class="card-body">
+                <p class="card-text">
+                    Snailight merupakan organisasi yang bergerak di bidang 
+                    teknologi, informasi, dan komunikasi. Berbagai projek
+                    diterima Snailight untuk kebutuhan inovasi. Kebutuhan 
+                    lainnya juga diterima oleh Snailight untuk menjadi aset
+                    yang bernilai.
+                </p>
+            </div>
+        </div>
+        <img src="assets/img/1b.png" alt="penjelasan usaha ini">
+    </div>
+    <img src="assets/img/1.png" alt="Bulan" style="height: 32em;">
+    <script src="assets/vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

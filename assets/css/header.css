@@ -17,6 +17,7 @@ body, html {
     letter-spacing: 10px;
     padding: 5px 20px;
     background: rgb(101, 127, 136);
+    z-index: 200;
     /* box-shadow: 10px 5px 5px black; */
 }
 
@@ -32,12 +33,15 @@ body, html {
 
 .header .dtt img {
     height: 80%;
+    border: thin solid black;
 }
 
 .header .dtt span {
     position: relative;
     height: fit-content;
-    padding: 4em 0;
+    font-weight: bolder;
+    font-size: 50px;
+    padding: 80px 0;
 }
 
 .header .navigation {
@@ -79,8 +83,8 @@ body, html {
     width: 100px;
     transition: .4s ease-out;
     background: transparent;
-    border-right: thin solid gray;
-    border-left: thin solid gray;
+    border-right: thin solid yellow;
+    border-left: thin solid yellow;
 }
 
 .board a:hover {
@@ -106,13 +110,14 @@ body, html {
         /* justify-content: center; */
         align-items: center;
         flex-direction: row;
-        padding: 0 20px;
+        /* padding: 0 20px; */
         gap: 32px;
     }
 
     .header .dtt img {
-        margin-left: 2em;
+        margin-left: 0;
         border-radius: 50%;
+        height: 100%;
     }
 
     .header .dtt span {
