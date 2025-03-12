@@ -23,7 +23,7 @@
         </div>
     </div>
 <?php
-    echo('<h1>Hello World</h1>')
+    echo('<h1 class="judul">Snailight</h1>')
 ?>
     <script src="assets/js/main.js"></script>
 </body>
