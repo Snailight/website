@@ -44,4 +44,9 @@
     .penjelasan {
         flex-direction: row-reverse;
     }
+
+    body img {
+        margin: 0;
+        padding: 0;
+    }
 }
