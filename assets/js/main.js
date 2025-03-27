@@ -6,6 +6,7 @@ let elm = null;
 
 function doSomething(scroll_pos) {
   // Do something with the scroll position
+  console.log(elm);
   if (elm === null) {
     if (scroll_pos < 80) {
       parent.style.boxShadow = 'none';

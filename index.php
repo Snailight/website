@@ -26,7 +26,7 @@
         </div>
     </div>
 <?php
-    echo('<h1 class="judul">Snailight</h1>')
+    echo('<h1 class="judul">Snailight</h1>');
 ?>
     <div class="penjelasan">
         <div class="card">
@@ -43,9 +43,8 @@
         </div>
         <img src="assets/img/1b.png" alt="penjelasan usaha ini">
     </div>
-    <img src="assets/img/1.png" alt="Bulan" style="height: 32em;">
+    <img src="assets/img/1.png" alt="Bulan" style="width: 100%;">
     <script src="assets/vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
-    <script src="assets/js/main.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

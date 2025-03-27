@@ -27,7 +27,7 @@
     font-weight: bold;
     padding: 10px 20px;
     margin-left: 10px;
-    z-index: 100;
+    z-index: 100; 
     width: 70%;
 }
 
@@ -36,6 +36,12 @@
     position: absolute;
     top: -80px;
     color: gray;
-    z-index: 90;
+    z-index: 90; 
     opacity: .7;
+}
+
+@media screen and (max-width: 992px) {
+    .penjelasan {
+        flex-direction: row-reverse;
+    }
 }

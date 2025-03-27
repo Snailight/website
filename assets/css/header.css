@@ -28,6 +28,7 @@ body, html {
     height: 80%;
     gap: 30%;
     flex-direction: row-reverse;
+    box-sizing: border-box;
     /* align-items: start; */
 }
 
@@ -123,6 +124,8 @@ body, html {
     .header .dtt span {
         margin: 0;
         padding: 0;
+        font-size: 1em;
+        letter-spacing: 2px;
     }
 
     .header .navigation {
