@@ -1,4 +1,8 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die('<h1>Probhibited</h1>');
+}
+
 require('vendor/autoload.php');
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
