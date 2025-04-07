@@ -3,11 +3,54 @@ let ticking = false;
 let pegang = null;
 let parent = null;
 let elm = null;
+let form = null;
+
+function kumpulkanBiodata(deret) {
+  let lembaran, hantar, notifikasi;
+  lembaran = { _csrf: '0' };
+  deret.forEach(e => {
+    switch(e.type) {
+      case 'text':
+      case 'tel':
+      case 'password':
+        lembaran[e.name] = e.value;
+        break;
+
+      case 'radio':
+        if (e.checked) {
+          lembaran[e.name] = e.id;
+        }
+        break;
+      
+      default:
+        console.log('Tidak mengenali ' + e.name);
+    }
+  });
+  hantar = new XMLHttpRequest;
+  hantar.onreadystatechange = e => {
+    if (hantar.readyState === XMLHttpRequest.DONE) {
+      notifikasi = document.getElementById('notifikasi');
+      if (hantar.status === 200) {
+        notifikasi.classList.remove('d-none');
+        console.log(hantar.response);
+        form.reset();
+      } else {
+        notifikasi = document.getElementById('umum');
+        notifikasi.classList.remove('d-none');
+      }
+      notifikasi.scrollIntoView({ block: "center" });
+    }
+  }
+  hantar.open('POST', 'mendaftar.php', true);
+  hantar.send(lembaran);
+}
 
 function doSomething(scroll_pos) {
   // Do something with the scroll position
   if (elm === null) {
-    if (scroll_pos < 80) {
+    if (parent === null) {
+      return undefined
+    } else if (scroll_pos < 80) {
       parent.style.boxShadow = 'none';
     } else {
       parent.style.boxShadow = '1px 5px 0 rgba(0, 0, 0, .6)';
@@ -61,4 +104,9 @@ window.addEventListener('load', e => {
       window.location.href = '/';
     })
   }
+  form = document.getElementsByTagName('form')[0];
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    kumpulkanBiodata(e.target.querySelectorAll('input'));
+  })
 })
