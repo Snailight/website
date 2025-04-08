@@ -106,6 +106,8 @@
     </div>
     <img src="assets/img/1.png" alt="Bulan" style="width: 100%;">
     <script src="assets/vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/md5.min.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

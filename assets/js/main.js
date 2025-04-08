@@ -6,7 +6,7 @@ let elm = null;
 let form = null;
 
 function kumpulkanBiodata(deret) {
-  let lembaran, hantar, notifikasi;
+  let lembaran, hantar, notifikasi, jawaban;
   lembaran = { _csrf: '0' };
   deret.forEach(e => {
     switch(e.type) {
@@ -30,10 +30,15 @@ function kumpulkanBiodata(deret) {
   hantar.onreadystatechange = e => {
     if (hantar.readyState === XMLHttpRequest.DONE) {
       notifikasi = document.getElementById('notifikasi');
+      jawaban = JSON.parse(hantar.responseText);
       if (hantar.status === 200) {
-        notifikasi.classList.remove('d-none');
-        console.log(hantar.response);
-        form.reset();
+        if (jawaban && jawaban.status === 'success') {
+          notifikasi.classList.remove('d-none');
+          form.reset();
+        } else {
+          notifikasi = document.getElementById('umum');
+          notifikasi.classList.remove('d-none');
+        }
       } else {
         notifikasi = document.getElementById('umum');
         notifikasi.classList.remove('d-none');
@@ -41,8 +46,12 @@ function kumpulkanBiodata(deret) {
       notifikasi.scrollIntoView({ block: "center" });
     }
   }
+
+  lembaran['telp'] = '62'.concat(lembaran['telp']);
+  lembaran['password'] = CryptoJS.MD5(lembaran['password']).toString(CryptoJS.enc.Hex);
+
   hantar.open('POST', 'mendaftar.php', true);
-  hantar.send(lembaran);
+  hantar.send(JSON.stringify(lembaran));
 }
 
 function doSomething(scroll_pos) {

@@ -8,7 +8,7 @@ require('vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$lembaran = json_decode(file_get_contents("php://input"));
+$lembaran = json_decode(file_get_contents("php://input"), true);
 $nama = $lembaran["nickname"];
 $telp = $lembaran["telp"];
 $password = $lembaran["password"];
@@ -19,6 +19,7 @@ $agama = $lembaran["agama"];
 $kewarganegaraan = $lembaran["kewarganegaraan"];
 
 $keterangan = [
+    'urutan' => 0, 
     'username' => $nama, 
     'password' => $password, 
     'telp' => $telp, 
@@ -51,12 +52,29 @@ $apiVersion = new ServerApi(ServerApi::V1);
 $client = new MongoDB\Client($uri, [], ['serverApi' => $apiVersion]);
 
 try {
-    $koleksi = $client->selectDatabase('Snailight')->selectCollection('pengguna');
-    $pengguna = $koleksi->findOne();
-    $keterangan['id'] = $pengguna->jumlah;
-    $pengguna->jumlah++;
-    $pengguna->tersimpan[$keterangan['id']] = $keterangan;
-    $koleksi->findOneAndUpdate([ '_id' => $pengguna->_id ], $pengguna);
+    $pangkalan = $client->selectDatabase('Snailight');
+    $batas = $pangkalan->selectCollection('batas');
+    $query = [ 'label' => 'pengguna' ];
+    $penunjuk = $batas->findOne($query);
+    $kini = $penunjuk->kini;
+    $penunjuk->kini++;
+    $batas->findOneAndUpdate($query, [ '$set' => $penunjuk ]);
+
+    $koleksi = $pangkalan->selectCollection('pengguna');
+    $keterangan['urutan'] = $kini;
+    $koleksi->insertOne($keterangan);
+
+    // $pengguna = $koleksi->findOne();
+    // $antri = $pengguna->jumlah;
+    // $koleksi->insertOne()
+    // $koleksi->findOneAndUpdate([ '_id' => $pengguna->_id ], [
+    //     '$set' => [
+    //         'jumlah' => $antri + 1, 
+    //         'tersimpan' => [
+    //             $antri => $keterangan
+    //         ]
+    //     ]
+    // ]);
 } catch (Exception $e) {
     printf($e->getMessage() . "\n");
     $status = "failed";
