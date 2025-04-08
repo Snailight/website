@@ -59,8 +59,8 @@ try {
     $kini = $penunjuk->kini;
 
     $koleksi = $pangkalan->selectCollection('pengguna');
-    $sama = $koleksi->aggregate([ '$match' => [ 'username' => $nama ] ]);
-    if (count($sama) < 1) {
+    $sama = $koleksi->aggregate([ [ '$match' => [ 'username' => $nama ] ] ]);
+    if (count(iterator_to_array($sama)) < 1) {
         $status = 'exist';
     } else {
         $penunjuk->kini++;
