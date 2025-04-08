@@ -54,7 +54,7 @@
                 Akun gagal didaftarkan. Pastikan semua kolom diisi
             </div>
             <div class="d-none alert alert-danger" id="terdapat">
-                Akun gagal didaftarkan. Username sudah terpakai
+                Akun gagal didaftarkan. Nickname sudah terpakai
             </div>
             <h3>Mendaftar sebagai pengguna</h3>
             <div class="form-group">

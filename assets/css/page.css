@@ -59,12 +59,17 @@
 }
 
 @media screen and (max-width: 992px) {
+    body img {
+        margin: 0;
+        padding: 0;
+    }
+
     .penjelasan {
         flex-direction: row-reverse;
     }
 
-    body img {
-        margin: 0;
-        padding: 0;
+    .pengguna form {
+        width: 100%;
+        border-radius: 0;
     }
 }

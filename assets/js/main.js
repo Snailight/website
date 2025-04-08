@@ -39,6 +39,7 @@ function kumpulkanBiodata(deret) {
           } else if (jawaban.status === 'exist') {
             notifikasi = document.getElementById('terdapat');
             notifikasi.classList.remove('d-none');
+            form.querySelector('input[name="nickname"]').value = '';
           }
         } else {
           notifikasi = document.getElementById('umum');
