@@ -4,30 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snailight</title>
-    <link rel="stylesheet" href="assets/vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/page.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="stylesheet" href="/assets/css/page.css">
 </head>
 <body>
-    <div class="header">
-        <div class="dtt">
-            <img src="assets/img/logo.png" alt="Coorporation">
-            <span>Snailight</span>
-        </div>
-        <div class="navigation">
-            <span></span><span></span><span></span>
-        </div>
-        <div class="board">
-            <a href="profile.php">Profile</a>
-            <a href="tools.php">Tools</a>
-            <a href="games.php">Games</a>
-            <a href="contact.php">Contact</a>
-        </div>
-    </div>
 <?php
-    echo('<h1 class="judul">Snailight</h1>');
+    include('stick.php');
 ?>
+    <h1 class="judul">Snailight</h1>
     <div class="penjelasan">
         <div class="card">
             <i class="bi bi-quote" id="hiasan"></i>
@@ -44,10 +30,10 @@
         <img src="assets/img/1b.png" alt="penjelasan usaha ini">
     </div>
     <div class="pengguna mb-4">
-        <form action="mendaftar.php">
+        <form>
             <div class="d-none alert alert-success" id="notifikasi">
                 Akun berhasil didaftarkan. Ikuti 
-                <a href="dashboard.php">rute</a> 
+                <a href="/user/dashboard.php">rute</a> 
                 untuk melanjutkan
             </div>
             <div class="d-none alert alert-danger" id="umum">
@@ -59,7 +45,7 @@
             <h3>Mendaftar sebagai pengguna</h3>
             <div class="form-group">
                 <label for="nickname">Nickname</label>
-                <input type="text" name="nickname" id="nickname" class="form-control" placeholder="Enter Text" required>
+                <input type="text" name="nickname" id="nickname" class="form-control" placeholder="Enter Nickname" required>
             </div>
             <div class="form-group">
                 <label for="telp">Telp</label>
