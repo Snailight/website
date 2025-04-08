@@ -61,12 +61,12 @@ try {
     $koleksi = $pangkalan->selectCollection('pengguna');
     $sama = $koleksi->aggregate([ [ '$match' => [ 'username' => $nama ] ] ]);
     if (count(iterator_to_array($sama)) < 1) {
-        $status = 'exist';
-    } else {
         $penunjuk->kini++;
         $batas->findOneAndUpdate($query, [ '$set' => $penunjuk ]);
         $keterangan['urutan'] = $kini;
         $koleksi->insertOne($keterangan);
+    } else {
+        $status = 'exist';
     }
 } catch (Exception $e) {
     printf($e->getMessage() . "\n");
