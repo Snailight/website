@@ -32,9 +32,14 @@ function kumpulkanBiodata(deret) {
       notifikasi = document.getElementById('notifikasi');
       jawaban = JSON.parse(hantar.responseText);
       if (hantar.status === 200) {
-        if (jawaban && jawaban.status === 'success') {
-          notifikasi.classList.remove('d-none');
-          form.reset();
+        if (jawaban) {
+          if (jawaban.status === 'success') {
+            notifikasi.classList.remove('d-none');
+            form.reset();
+          } else if (jawaban.status === 'exist') {
+            notifikasi = document.getElementById('terdapat');
+            notifikasi.classList.remove('d-none');
+          }
         } else {
           notifikasi = document.getElementById('umum');
           notifikasi.classList.remove('d-none');

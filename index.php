@@ -53,6 +53,9 @@
             <div class="d-none alert alert-danger" id="umum">
                 Akun gagal didaftarkan. Pastikan semua kolom diisi
             </div>
+            <div class="d-none alert alert-danger" id="terdapat">
+                Akun gagal didaftarkan. Username sudah terpakai
+            </div>
             <h3>Mendaftar sebagai pengguna</h3>
             <div class="form-group">
                 <label for="nickname">Nickname</label>

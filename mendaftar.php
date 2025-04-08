@@ -57,27 +57,20 @@ try {
     $query = [ 'label' => 'pengguna' ];
     $penunjuk = $batas->findOne($query);
     $kini = $penunjuk->kini;
-    $penunjuk->kini++;
-    $batas->findOneAndUpdate($query, [ '$set' => $penunjuk ]);
 
     $koleksi = $pangkalan->selectCollection('pengguna');
-    $keterangan['urutan'] = $kini;
-    $koleksi->insertOne($keterangan);
-
-    // $pengguna = $koleksi->findOne();
-    // $antri = $pengguna->jumlah;
-    // $koleksi->insertOne()
-    // $koleksi->findOneAndUpdate([ '_id' => $pengguna->_id ], [
-    //     '$set' => [
-    //         'jumlah' => $antri + 1, 
-    //         'tersimpan' => [
-    //             $antri => $keterangan
-    //         ]
-    //     ]
-    // ]);
+    $sama = $koleksi->aggregate([ '$match' => [ 'username' => $nama ] ]);
+    if (count($sama) < 1) {
+        $status = 'exist';
+    } else {
+        $penunjuk->kini++;
+        $batas->findOneAndUpdate($query, [ '$set' => $penunjuk ]);
+        $keterangan['urutan'] = $kini;
+        $koleksi->insertOne($keterangan);
+    }
 } catch (Exception $e) {
     printf($e->getMessage() . "\n");
-    $status = "failed";
+    $status = 'failed';
 }
 
 $ketr = array( "status" => $status );
