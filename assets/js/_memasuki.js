@@ -46,8 +46,9 @@ function kumpulkan(deret) {
           if (jawaban.status === 'success') {
             document.cookie += 'userId='
               .concat(jawaban.userId.toString())
-              .concat('; path=/');
-            document.location = '/user/dashboard.php';
+              .concat('; path=/; domain=')
+              .concat(window.location.hostname);
+            window.location = '/user/dashboard.php';
           } else if (jawaban.status === 'notfound') {
             perhatian.innerHTML = 'Akun tidak ditemukan';
           } else if (jawaban.status === 'id') {
