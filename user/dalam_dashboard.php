@@ -6,7 +6,6 @@
     <title>Snailight</title>
     <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/vendor/bootstrap-icons/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/assets/css/dashboard.css">
 </head>
 <body>
     <h1>Hai, <?php echo($nickname) ?>!</h1>
@@ -72,9 +71,54 @@ $alatt = $lapangan->peralatan;
                 <li class="list-group-item">&#10024; <?php echo(strval($fisik->exp)); ?></li>
               </ul>
             </div>
-          </div>
+            <div class="card mt-1 mb-1">
+              <div class="card-header">
+                Harta
+              </div>
+              <ul class="list-group list-group-flush">
+<?php
+$keymap = [
+  'potion' => '&#129380;', 
+  'aqua' => '&#127862;', 
+  'gold' => '&#129689;', 
+  'diamond' => '&#128142;', 
+  'batu' => '&#129704;', 
+  'kayu' => '&#129717;', 
+  'string' => '&#128376;', 
+  'iron' => '&#9939;', 
+  'sampah' => '&#128465;'
+];
+foreach($harta as $k => $v) {
+  if(array_key_exists($k, $keymap)) {
+echo('<li class="list-group-item">'. $keymap[$k] .' '. $k .' '. (($v<0)?('&#8734'):(strval($v))) .'</li>');
+  }
+}
+?>
+              </ul>
+            </div>
+            <div class="card mt-1 mb-1">
+              <div class="card-header">
+                Peralatan
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">&#128481; <?php echo($alatt->pedang); ?></li>
+                <li class="list-group-item">&#129404; <?php echo($alatt->armor); ?></li>
+                <li class="list-group-item">&#129406; <?php echo($alatt->sepatu); ?></li>
+              </ul>
+            </div>
 <?php } ?>
       </div>
     </div>
+  </div>
+  <div class="card m-4">
+    <div class="card-header">
+      Akun
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Logout</h5>
+      <a href="#" id="akun-logout" class="btn btn-danger">Setuju</a>
+    </div>
+  </div>
+  <script src="/assets/js/dashboard.js"></script>
 </body>
 </html>
