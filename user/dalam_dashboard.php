@@ -63,7 +63,7 @@ $harta = $lapangan->barang;
 $alatt = $lapangan->peralatan;
 ?>
           <div class="card-footer text-body-secondary">
-            <div class="card mt-4 mb-4">
+            <div class="card mt-1 mb-1">
               <div class="card-header">
                 Kesehatan
               </div>
