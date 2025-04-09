@@ -53,7 +53,7 @@ function kumpulkan(deret) {
               .concat('; expires=')
               .concat(expires.toUTCString())
               .concat('; path=/')
-            window.location = '/user/dashboard.php';
+            window.location.href = '/user/dashboard.php';
           } else if (jawaban.status === 'notfound') {
             perhatian.innerHTML = 'Akun tidak ditemukan';
           } else if (jawaban.status === 'id') {
