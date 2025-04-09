@@ -33,6 +33,8 @@ function kumpulkan(deret) {
   });
 
   if(pwd === null) return undefined;
+  let expires = new Date;
+  expires.setTime(expires.getTime() + 24 * 60 * 60 * 1000);
   let formulir = { formasi, id, pwd };
   let jawaban;
   let hantar = new XMLHttpRequest;
@@ -46,8 +48,11 @@ function kumpulkan(deret) {
           if (jawaban.status === 'success') {
             document.cookie += 'userId='
               .concat(jawaban.userId.toString())
-              .concat('; path=/; domain=')
-              .concat(window.location.hostname);
+              .concat('; domain=')
+              .concat(window.location.hostname)
+              .concat('; expires=')
+              .concat(expires.toUTCString())
+              .concat('; path=/')
             window.location = '/user/dashboard.php';
           } else if (jawaban.status === 'notfound') {
             perhatian.innerHTML = 'Akun tidak ditemukan';
