@@ -57,8 +57,21 @@ echo('Buat Inventory untuk memulai perjalananmu');
 if(!$ketersediaan[1]) {
 echo('<a href="#" id="buat-inventory" class="btn btn-primary">Buat Inventory</a>');
 } else {
+$lapangan = pengguna_kekayaan($userId);
+$fisik = $lapangan->kesehatan;
+$harta = $lapangan->barang;
+$alatt = $lapangan->peralatan;
 ?>
           <div class="card-footer text-body-secondary">
+            <div class="card mt-4 mb-4">
+              <div class="card-header">
+                Kesehatan
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">&#128151; <?php echo(strval($fisik->nyawa)); ?></li>
+                <li class="list-group-item">&#10024; <?php echo(strval($fisik->exp)); ?></li>
+              </ul>
+            </div>
           </div>
 <?php } ?>
       </div>

@@ -78,5 +78,18 @@ function pengguna_money($userId) {
   return 0;
 }
 
+function pengguna_kekayaan($userId) {
+  global $pangkalan;
+  if ($pangkalan === null) return null;
+  try {
+    $koleksi = $pangkalan->selectCollection('kekayaan');
+    $doc = $koleksi->findOne([ 'pengguna_id' => $userId ]);
+    return $doc;
+  } catch (Exception $e) {
+    printf("%s\n", $e->getMessage());
+  }
+  return null;
+}
+
 include('dalam_dashboard.php');
 ?>
