@@ -33,7 +33,7 @@ echo('<a href="#" id="buat-wallet" class="btn btn-primary">Buat Wallet</a>');
 } else {
 ?>
         <div class="card-footer text-body-secondary">
-<?php echo(strval(pengguna_money($userId))); ?>
+<?php echo('&#128184; money ' . strval(pengguna_money($userId))); ?>
         </div>
 <?php } ?>
       </div>
