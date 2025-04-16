@@ -12,8 +12,9 @@
 <?php
 $userId = intval($_COOKIE['userId']);
 $ketersediaan = [ wallet_tersedia($userId), inventory_tersedia($userId) ];
+$money = pengguna_money($userId);
 ?>
-    <div class="card m-4">
+    <div class="card m-4" style="position: sticky; top: -135px; z-index: 100;">
       <div class="card-header">
         Wallet
       </div>
@@ -29,11 +30,14 @@ echo('Buat Wallet untuk mendapatkan hingga 200 money di awal perjalananmu');
         </p>
 <?php
 if(!$ketersediaan[0]) {
-echo('<a href="#" id="buat-wallet" class="btn btn-primary">Buat Wallet</a>');
+?>
+<div></div>
+<a href="#" id="buat-wallet" class="btn btn-primary">Buat Wallet</a>
+<?php
 } else {
 ?>
         <div class="card-footer text-body-secondary">
-<?php echo('&#128184; money ' . strval(pengguna_money($userId))); ?>
+<?php echo('&#128184; money ' . strval($money)); ?>
         </div>
 <?php } ?>
       </div>
@@ -54,7 +58,10 @@ echo('Buat Inventory untuk memulai perjalananmu');
         </p>
 <?php
 if(!$ketersediaan[1]) {
-echo('<a href="#" id="buat-inventory" class="btn btn-primary">Buat Inventory</a>');
+?>
+<div></div>
+<a href="#" id="buat-harta" class="btn btn-primary">Buat Inventory</a>
+<?php
 } else {
 $lapangan = pengguna_kekayaan($userId);
 $fisik = $lapangan->kesehatan;
@@ -112,11 +119,52 @@ echo('<li class="list-group-item">'. $keymap[$k] .' '. $k .' '. (($v<0)?('&#8734
   </div>
   <div class="card m-4">
     <div class="card-header">
-      Akun
+      Dagang
     </div>
     <div class="card-body">
-      <h5 class="card-title">Logout</h5>
-      <a href="#" id="akun-logout" class="btn btn-danger">Setuju</a>
+      <h5 class="card-title">Harta</h5>
+      <ul class="list-group list-group-flush">
+<?php
+$trade = pasar_dagang();
+foreach($trade as $k => $v) {
+  if(array_key_exists($k, $keymap)) {
+?>
+<li class="list-group-item">
+  <div class="lapak d-flex align-items-center" style="justify-content: space-between;">
+    <div class="w-25"><?php echo($keymap[$k] .' '. $k .' x'. (($v[1]<0)?('&#8734'):(strval($v[1])))); ?></div>
+    <div class="w-25"><?php echo(strval($v[2])); ?></div>
+    <div class="w-50 text-end">
+      <a class="btn btn-secondary" data-urutan="<?php echo($v[0]); ?>" href="#">Beli</a>
+    </div>
+  </div>
+</li>
+<?php
+  }
+}
+?>
+      </ul>
+    </div>
+  </div>
+  <div id="keranjang" class="d-none card m-4">
+    <div class="card-header">
+      Keranjang
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Harta</h5>
+      <ul class="list-group list-group-flush">
+      </ul>
+      <div class="text-center">
+        <a href="#" class="btn btn-success">Bayar ⬤ <span id="total-bayar" data-money="<?php echo(strval($money)); ?>"></span></a>
+      </div>
+    </div>
+  </div>
+  <div class="card m-4">
+    <div class="card-header">
+      Pengaturan
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Akun</h5>
+      <a href="#" id="akun-logout" class="btn btn-danger">Logout</a>
     </div>
   </div>
   <script src="/assets/js/dashboard.js"></script>

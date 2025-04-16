@@ -16,7 +16,9 @@ body, html {
     font-size: large;
     letter-spacing: 10px;
     padding: 5px 20px;
-    background: rgb(101, 127, 136);
+    background-color: rgb(101, 127, 136);
+    background-image: url("../img/9499.jpg");
+    background-size: cover;
     z-index: 200; 
     /* box-shadow: 10px 5px 5px black; */
 }

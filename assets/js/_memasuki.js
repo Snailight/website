@@ -40,8 +40,6 @@ function kumpulkan(deret) {
   let hantar = new XMLHttpRequest;
   hantar.onreadystatechange = e => {
     if(hantar.readyState === XMLHttpRequest.DONE) {
-      perhatian.classList.remove('d-none');
-      console.log(hantar.responseText);
       jawaban = JSON.parse(hantar.responseText);
       if(hantar.status === 200) {
         if (jawaban) {
@@ -54,6 +52,7 @@ function kumpulkan(deret) {
               .concat(expires.toUTCString())
               .concat('; path=/')
             window.location.href = '/user/dashboard.php';
+            return undefined;
           } else if (jawaban.status === 'notfound') {
             perhatian.innerHTML = 'Akun tidak ditemukan';
           } else if (jawaban.status === 'id') {
@@ -66,8 +65,9 @@ function kumpulkan(deret) {
         } else {
           perhatian.innerHTML = "Kesalahan respon server\nJSON tidak terbaca";
         }
+        perhatian.classList.remove('d-none');
       } else {
-        perhatian.innerHTML = 'Kesalahan tidak dikenali';
+        alert('Kesalahan tidak dikenali');
       }
     }
   }

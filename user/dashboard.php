@@ -91,5 +91,18 @@ function pengguna_kekayaan($userId) {
   return null;
 }
 
+function pasar_dagang() {
+  $curl = curl_init($_SERVER['CORE_ADDRESS'] . '/market');
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($curl, CURLOPT_HEADER, false);
+  $ketr = curl_exec($curl);
+  if (!$ketr) {
+    error_log(curl_error($curl));
+    $ketr = '{}';
+  }
+  curl_close($curl);
+  return(json_decode($ketr));
+}
+
 include('dalam_dashboard.php');
 ?>
