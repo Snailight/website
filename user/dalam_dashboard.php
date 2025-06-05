@@ -11,8 +11,6 @@
     <h1>Hai, <?php echo($nickname) ?>!</h1>
 <?php
 $userId = intval($_COOKIE['userId']);
-$ketersediaan = [ wallet_tersedia($userId), inventory_tersedia($userId) ];
-$money = pengguna_money($userId);
 ?>
     <div class="card m-4" style="position: sticky; top: -135px; z-index: 100;">
       <div class="card-header">
@@ -23,13 +21,13 @@ $money = pengguna_money($userId);
         <p class="card-text">
           Wallet adalah tempat menyimpan money. 
 <?php
-if(!$ketersediaan[0]) {
+if($money == null) {
 echo('Buat Wallet untuk mendapatkan hingga 200 money di awal perjalananmu');
 }
 ?>
         </p>
 <?php
-if(!$ketersediaan[0]) {
+if($money == null) {
 ?>
 <div></div>
 <a href="#" id="buat-wallet" class="btn btn-primary">Buat Wallet</a>
@@ -37,7 +35,7 @@ if(!$ketersediaan[0]) {
 } else {
 ?>
         <div class="card-footer text-body-secondary">
-<?php echo('&#128184; money ' . strval($money)); ?>
+<?php echo('&#128184; money ' . pengguna_money()); ?>
         </div>
 <?php } ?>
       </div>
@@ -51,22 +49,22 @@ if(!$ketersediaan[0]) {
         <p class="card-text">
           Inventory adalah tempat barang yang berguna untuk keseharianmu. 
 <?php
-if(!$ketersediaan[1]) {
+if($nyawa == null) {
 echo('Buat Inventory untuk memulai perjalananmu');
 }
 ?>
         </p>
 <?php
-if(!$ketersediaan[1]) {
+if($nyawa == null) {
 ?>
 <div></div>
 <a href="#" id="buat-harta" class="btn btn-primary">Buat Inventory</a>
 <?php
 } else {
 $lapangan = pengguna_kekayaan($userId);
-$fisik = $lapangan->kesehatan;
-$harta = $lapangan->barang;
-$alatt = $lapangan->peralatan;
+$fisik = $lapangan['kesehatan'];
+$harta = $lapangan['barang'];
+$alatt = $lapangan['peralatan'];
 ?>
           <div class="card-footer text-body-secondary">
             <div class="card mt-1 mb-1">
@@ -74,8 +72,8 @@ $alatt = $lapangan->peralatan;
                 Kesehatan
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">&#128151; <?php echo(strval($fisik->nyawa)); ?></li>
-                <li class="list-group-item">&#10024; <?php echo(strval($fisik->exp)); ?></li>
+                <li class="list-group-item">&#128151; <?php echo(strval($fisik['nyawa'])); ?></li>
+                <li class="list-group-item">&#10024; <?php echo(strval($fisik['exp'])); ?></li>
               </ul>
             </div>
             <div class="card mt-1 mb-1">

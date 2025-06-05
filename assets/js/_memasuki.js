@@ -23,7 +23,7 @@ function kumpulkan(deret) {
           perhatian.innerHTML = "Password terdiri dari 8 karakter";
           pwd = null;
         } else {
-          pwd = CryptoJS.MD5(pwd).toString(CryptoJS.enc.Hex);
+          // pwd = CryptoJS.MD5(pwd).toString(CryptoJS.enc.Hex);
         }
         break;
       

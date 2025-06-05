@@ -111,7 +111,7 @@ window.addEventListener('load', e => {
   parent = pegang.parentElement || pegang.parentNode;
   if (elm === null) {
     // null
-  } else if (window.screen.width < 992) {
+  } else if (document.body.clientWidth < 992) {
     elm = null;
   } else {
     elm.style.cursor = 'pointer';

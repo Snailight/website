@@ -18,61 +18,62 @@ $tanggal = $lembaran["tanggal"];
 $agama = $lembaran["agama"];
 $kewarganegaraan = $lembaran["kewarganegaraan"];
 
-$keterangan = [
-    'urutan' => 0, 
-    'username' => $nama, 
-    'password' => $password, 
-    'telp' => $telp, 
-    'limit' => 10, 
-    'jabatan' => 'warga', 
-    'kekuatan' => [
-        'tangga' => 'pemula', 
-        'level' => 1, 
-        'kodam' => null
-    ], 
-    'lifetime' => [
-        'bergabung' => time(), 
-        'senior' => false
-    ], 
-    'peringatan' => 0, 
-    'terlarang' => false
-];
+// $keterangan = [
+//     'urutan' => 0, 
+//     'username' => $nama, 
+//     'password' => $password, 
+//     'telp' => $telp, 
+//     'limit' => 10, 
+//     'jabatan' => 'warga', 
+//     'kekuatan' => [
+//         'tangga' => 'pemula', 
+//         'level' => 1, 
+//         'kodam' => null
+//     ], 
+//     'lifetime' => [
+//         'bergabung' => time(), 
+//         'senior' => false
+//     ], 
+//     'peringatan' => 0, 
+//     'terlarang' => false
+// ];
 
-$status = "success";
+$chc = pack("Ia32a32", 25, $nama, $password);
+$req = pack("ILLa256a256a32IIILlCIC", 
+  9, 1, 1, $nama, $password, 
+  $telp, 10, 3, 1, 1, 
+  time(), 0, 0, 0);
+$jwb = null;
 
-use MongoDB\Driver\ServerApi;
-
-$pass = $_SERVER['MONGODB_PASS'];
-$uri = "mongodb+srv://Reckordp:$pass@keteranganumumga.pjt8q.mongodb.net/?appName=KeteranganUmumGA";
-
-// Set the version of the Stable API on the client
-$apiVersion = new ServerApi(ServerApi::V1);
-
-// Create a new client and connect to the server
-$client = new MongoDB\Client($uri, [], ['serverApi' => $apiVersion]);
-
-try {
-    $pangkalan = $client->selectDatabase('Snailight');
-    $batas = $pangkalan->selectCollection('batas');
-    $query = [ 'label' => 'pengguna' ];
-    $penunjuk = $batas->findOne($query);
-    $kini = $penunjuk->kini;
-
-    $koleksi = $pangkalan->selectCollection('pengguna');
-    $sama = $koleksi->aggregate([ [ '$match' => [ 'username' => $nama ] ] ]);
-    if (count(iterator_to_array($sama)) < 1) {
-        $penunjuk->kini++;
-        $batas->findOneAndUpdate($query, [ '$set' => $penunjuk ]);
-        $keterangan['urutan'] = $kini;
-        $koleksi->insertOne($keterangan);
-    } else {
-        $status = 'exist';
-    }
-} catch (Exception $e) {
-    printf($e->getMessage() . "\n");
-    $status = 'failed';
+$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+socket_connect($sock, $_SERVER['CORE_ADDRESS'], $_SERVER['CORE_PORT']);
+socket_send($sock, $chc, 68, 0);
+if(socket_recv($sock, $jwb, 36, 0) > 16) {
+  socket_close($sock);
+  http_response_code(503);
+  die(json_encode(array( "status" => "failed" )));
+}
+socket_close($sock);
+$resp = unpack("Ijenis", $jwb);
+if($resp['jenis'] == 4) {
+  $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+  socket_connect($sock, $_SERVER['CORE_ADDRESS'], $_SERVER['CORE_PORT']);
+  socket_send($sock, $req, 608, 0);
+  socket_recv($sock, $jwb, 16, 0);
+  socket_close($sock);
+} else if($resp['jenis'] == 11) {
+  die(json_encode(array( "status" => "exist" )));
+} else {
+  http_response_code(503);
+  die(json_encode(array( "status" => "failed" )));
+}
+$hasil = unpack("Qjenis/Qstatus", $jwb);
+$fp = fopen("haduh.txt", "w");
+fprintf($fp, "%s\n", $jwb);
+fclose($fp);
+if($hasil['status'] == 0) {
+  die(json_encode(array( "status" => "failed" )));
 }
 
-$ketr = array( "status" => $status );
-echo(json_encode($ketr));
+echo(json_encode(array( "status" => "success" )))
 ?>

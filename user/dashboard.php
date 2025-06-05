@@ -1,6 +1,7 @@
 <?php
+$nyawa = null;
+$money = null;
 $nickname = null;
-$pangkalan = null;
 
 if (isset($_COOKIE['userId'])) {
   require($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
@@ -8,29 +9,18 @@ if (isset($_COOKIE['userId'])) {
   $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
   $dotenv->load();
 
-  $pass = $_SERVER['MONGODB_PASS'];
-  $uri = "mongodb+srv://Reckordp:$pass@keteranganumumga.pjt8q.mongodb.net/?appName=KeteranganUmumGA";
-
-  // Set the version of the Stable API on the client
-  $apiVersion = new MongoDB\Driver\ServerApi(MongoDB\Driver\ServerApi::V1);
-
-  // Create a new client and connect to the server
-  $client = new MongoDB\Client($uri, [], ['serverApi' => $apiVersion]);
-
-  try {
-    $pangkalan = $client->selectDatabase('Snailight');
-    $koleksi = $pangkalan->selectCollection('pengguna');
-    $deret = $koleksi->find([ 'urutan' => intval($_COOKIE['userId']) ], [ 
-        'projection' => [ 'username' => 1 ]
-    ]);
-    $petak = new IteratorIterator($deret);
-    $petak->rewind();
-    $kini = $petak->current();
-    if($kini !== null) {
-        $nickname = $kini['username'];
-    }
-  } catch (Exception $e) {
-    die($e->getMessage() . "\n");
+  $user_id = intval($_COOKIE['userId']);
+  $hasil = null;
+  if(exec("./nampan kekayaan $user_id nyawa", $hasil)) {
+    $nyawa = intval($hasil[0]);
+  }
+  $hasil = null;
+  if(exec("./nampan liquiditas $user_id money", $hasil)) {
+    $money = intval($hasil[0]);
+  }
+  $hasil = null;
+  if(exec("./nampan pengguna $user_id nickname", $hasil)) {
+    $nickname = $hasil[0];
   }
 } else {
   unset($nickname);
@@ -44,64 +34,58 @@ if (!isset($nickname)) {
     die('User Not Available');
 }
 
-function dalam_koleksi($nama, $id) {
-  global $pangkalan;
-  if ($pangkalan === null) return null;
-  try {
-    $koleksi = $pangkalan->selectCollection($nama);
-    $sama = $koleksi->aggregate([ [ '$match' => [ 'pengguna_id' => $id ] ] ]);
-    return (count(iterator_to_array($sama)) > 0);
-  } catch (Exception $e) {
-    return false;
+function pengguna_money() {
+  global $money;
+  return ($money<0)?('&#8734'):(strval($money));
+}
+
+function pengguna_kekayaan($user_id) {
+  global $nyawa;
+  if ($nyawa === null) return null;
+  $deret = [
+    'kesehatan' => [
+      'nyawa' => $nyawa, 
+      'exp' => null, 
+    ], 
+    'barang' => [
+      'potion' => null, 
+      'aqua' => null, 
+      'gold' => null, 
+      'diamond' => null, 
+      'batu' => null, 
+      'kayu' => null, 
+      'string' => null, 
+      'iron' => null, 
+      'sampah' => null
+    ], 
+    'peralatan' => [
+      'pedang' => null, 
+      'armor' => null, 
+      'sepatu' => null
+    ]
+  ];
+
+  foreach ($deret['barang'] as $kunci => $nilai) {
+    $hasil = null;
+    if(exec("./nampan kekayaan $user_id $kunci", $hasil) !== false) {
+      $deret['barang'][$kunci] = intval($hasil[0]);
+    }
   }
-}
-
-function wallet_tersedia($userId) {
-  return dalam_koleksi('liquiditas', $userId);
-}
-
-function inventory_tersedia($userId) {
-  return dalam_koleksi('kekayaan', $userId);
-}
-
-function pengguna_money($userId) {
-  global $pangkalan;
-  if ($pangkalan === null) return 0;
-  try {
-    $koleksi = $pangkalan->selectCollection('liquiditas');
-    $doc = $koleksi->findOne([ 'pengguna_id' => $userId ]);
-    $money = $doc->money;
-    return ($money<0)?('&#8734'):($money);
-  } catch (Exception $e) {
-    printf("%s\n", $e->getMessage());
-  }
-  return 0;
-}
-
-function pengguna_kekayaan($userId) {
-  global $pangkalan;
-  if ($pangkalan === null) return null;
-  try {
-    $koleksi = $pangkalan->selectCollection('kekayaan');
-    $doc = $koleksi->findOne([ 'pengguna_id' => $userId ]);
-    return $doc;
-  } catch (Exception $e) {
-    printf("%s\n", $e->getMessage());
-  }
-  return null;
+  return $deret;
 }
 
 function pasar_dagang() {
-  $curl = curl_init($_SERVER['CORE_ADDRESS'] . '/market');
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($curl, CURLOPT_HEADER, false);
-  $ketr = curl_exec($curl);
-  if (!$ketr) {
-    error_log(curl_error($curl));
-    $ketr = '{}';
-  }
-  curl_close($curl);
-  return(json_decode($ketr));
+  // $curl = curl_init($_SERVER['CORE_ADDRESS'] . '/market');
+  // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+  // curl_setopt($curl, CURLOPT_HEADER, false);
+  // $ketr = curl_exec($curl);
+  // if (!$ketr) {
+  //   error_log(curl_error($curl));
+  //   $ketr = '{}';
+  // }
+  // curl_close($curl);
+  // return(json_decode($ketr));
+  return [];
 }
 
 include('dalam_dashboard.php');
