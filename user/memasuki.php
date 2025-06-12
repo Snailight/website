@@ -18,7 +18,8 @@ $resp = null;
 $resp_user_id = null;
 
 if(exec("./nampan login $user_id $user_ps", $resp)) {
-  $resp_user_id = intval($resp);
+  $resp_user_id = $resp[0];
+  // settype($resp_user_id, 'int');
 } else {
   $status = 'notfound';
 }

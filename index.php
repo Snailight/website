@@ -89,7 +89,12 @@
                 <input type="text" name="kewarganegaraan" id="kewarganegaraan" class="form-control" placeholder="Enter Kewarganegaraan" required>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-submit mt-4">Kumpulkan</button>
+                <button type="submit" class="btn btn-primary btn-submit mt-4">
+                    <span>Kumpulkan</span>
+                    <div class="spinner-grow" role="status" hidden>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </button>
             </div>
         </form>
     </div>

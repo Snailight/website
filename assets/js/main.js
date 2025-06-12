@@ -6,8 +6,11 @@ let elm = null;
 let form = null;
 
 function kumpulkanBiodata(deret) {
-  let lembaran, hantar, notifikasi, jawaban;
+  let lembaran, hantar, notifikasi, jawaban, sbt;
   lembaran = { _csrf: '0' };
+  sbt = form.querySelector('button[type="submit"]');
+  sbt.querySelector('span').setAttribute('hidden', true);
+  sbt.querySelector('div').removeAttribute('hidden');
   deret.forEach(e => {
     switch(e.type) {
       case 'text':
@@ -30,6 +33,8 @@ function kumpulkanBiodata(deret) {
   hantar.onreadystatechange = e => {
     if (hantar.readyState === XMLHttpRequest.DONE) {
       notifikasi = document.getElementById('notifikasi');
+      sbt.querySelector('span').removeAttribute('hidden');
+      sbt.querySelector('div').setAttribute('hidden', true);
       jawaban = JSON.parse(hantar.responseText);
       if (hantar.status === 200) {
         if (jawaban) {
@@ -54,7 +59,7 @@ function kumpulkanBiodata(deret) {
   }
 
   lembaran['telp'] = '62'.concat(lembaran['telp']);
-  lembaran['password'] = CryptoJS.MD5(lembaran['password']).toString(CryptoJS.enc.Hex);
+  // lembaran['password'] = CryptoJS.MD5(lembaran['password']).toString(CryptoJS.enc.Hex);
 
   hantar.open('POST', 'mendaftar.php', true);
   hantar.send(JSON.stringify(lembaran));

@@ -37,12 +37,44 @@ $kewarganegaraan = $lembaran["kewarganegaraan"];
 //     'peringatan' => 0, 
 //     'terlarang' => false
 // ];
+$idagama = 0x10;
+if($agama == 'Islam') {
+  $idagama = 0;
+} else if($agama == 'Kristem' || $agama == 'Protestan') {
+  $idagama = 1;
+} else if($agama == 'Katolik') {
+  $idagama = 2;
+} else if($agama == 'Buddha') {
+  $idagama = 3;
+} else if($agama == 'Hindu') {
+  $idagama = 4;
+} else if($agama == 'Konghucu') {
+  $idagama = 5;
+}
 
-$chc = pack("Ia32a32", 25, $nama, $password);
-$req = pack("ILLa256a256a32IIILlCIC", 
-  9, 1, 1, $nama, $password, 
+$user_id = 1;
+$sstatus = pack("IIQ", 1, 0, 0);
+$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+socket_connect($sock, $_SERVER['CORE_ADDRESS'], $_SERVER['CORE_PORT']);
+socket_send($sock, $sstatus, 68, 0);
+if(socket_recv($sock, $jwb, 36, 0) == 16) {
+  socket_close($sock);
+  $hasil = unpack("Ijenis/Ikosong/abio/aci/akyan/alquid/apguna", $jwb);
+  $user_id += ord($hasil['pguna']);
+} else {
+  socket_close($sock);
+  http_response_code(503);
+  die(json_encode(array( "status" => "failed" )));
+}
+
+$chc = pack("IIa32a32", 25, 0, $nama, $password);
+$req = pack("IIQQa256a256a32IIILlCIC", 
+  9, 0, 1, $user_id, $nama, $password, 
   $telp, 10, 3, 1, 1, 
   time(), 0, 0, 0);
+$req_bio = pack("IIQLa256Ia64lILaa64", 
+  5, 0, 1, $user_id, $nama, $jenis, $tempat, 
+  strtotime($tanggal), $idagama, 0, 0, $kewarganegaraan);
 $jwb = null;
 
 $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -67,13 +99,22 @@ if($resp['jenis'] == 4) {
   http_response_code(503);
   die(json_encode(array( "status" => "failed" )));
 }
-$hasil = unpack("Qjenis/Qstatus", $jwb);
-$fp = fopen("haduh.txt", "w");
-fprintf($fp, "%s\n", $jwb);
-fclose($fp);
+$hasil = unpack("Ijenis/Ikosong/Qstatus", $jwb);
 if($hasil['status'] == 0) {
   die(json_encode(array( "status" => "failed" )));
 }
 
+if($hasil['jenis'] == 6) {
+  $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+  socket_connect($sock, $_SERVER['CORE_ADDRESS'], $_SERVER['CORE_PORT']);
+  socket_send($sock, $req_bio, 440, 0);
+  socket_recv($sock, $jwb, 16, 0);
+  socket_close($sock);
+}
+
+$hasil = unpack("Ijenis/Ikosong/Qstatus", $jwb);
+if($hasil['status'] == 0) {
+  die(json_encode(array( "status" => "failed" )));
+}
 echo(json_encode(array( "status" => "success" )))
 ?>

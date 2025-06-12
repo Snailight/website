@@ -9,7 +9,7 @@ if (isset($_COOKIE['userId'])) {
   $dotenv = Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
   $dotenv->load();
 
-  $user_id = intval($_COOKIE['userId']);
+  $user_id = $_COOKIE['userId'];
   $hasil = null;
   if(exec("./nampan kekayaan $user_id nyawa", $hasil)) {
     $nyawa = intval($hasil[0]);
@@ -23,15 +23,14 @@ if (isset($_COOKIE['userId'])) {
     $nickname = $hasil[0];
   }
 } else {
-  unset($nickname);
   include('_login.php');
   die();
 }
 
 if (!isset($nickname)) {
-    die('Page Not Available');
+  die('Page Not Available');
 } else if ($nickname === null) {
-    die('User Not Available');
+  die('User Not Available');
 }
 
 function pengguna_money() {
