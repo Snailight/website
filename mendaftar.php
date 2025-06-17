@@ -72,7 +72,7 @@ $req = pack("IIQQa256a256a32IIILlCIC",
   9, 0, 1, $user_id, $nama, $password, 
   $telp, 10, 3, 1, 1, 
   time(), 0, 0, 0);
-$req_bio = pack("IIQQa256Ia64lILaa64", 
+$req_bio = pack("IIQQa256Qa64QQQaa64", 
   5, 0, 1, $user_id, $nama, $jenis, $tempat, 
   strtotime($tanggal), $idagama, 0, 0, $kewarganegaraan);
 $jwb = null;
